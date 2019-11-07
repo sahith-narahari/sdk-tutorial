@@ -7,7 +7,6 @@ const RouterKey = ModuleName
 type MsgEmployee struct {
 	Name       string         `json:"name"`
 	EmployeeId string         `json:"employeeId"`
-	Owner      sdk.AccAddress `json:"owner"`
 }
 
 type MsgGetEmployee struct {
