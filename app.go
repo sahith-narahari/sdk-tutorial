@@ -28,7 +28,7 @@ import (
 	"github.com/cosmos/sdk-tutorials/nameservice/x/nameservice"
 )
 
-const appName = "nameservice"
+const appName = "employeestore"
 
 var (
 	// default home directories for the application CLI
