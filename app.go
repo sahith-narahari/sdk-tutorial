@@ -26,9 +26,10 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/supply"
 
 	"github.com/cosmos/sdk-tutorials/nameservice/x/nameservice"
+	"github.com/sahith-narahari/sdk-tutorial/x/employeestore"
 )
 
-const appName = "nameservice"
+const appName = "employeeStore"
 
 var (
 	// default home directories for the application CLI
@@ -50,6 +51,7 @@ var (
 		supply.AppModuleBasic{},
 
 		nameservice.AppModule{},
+		empStore.AppModule{},
 	)
 	// account permissions
 	maccPerms = map[string][]string{
