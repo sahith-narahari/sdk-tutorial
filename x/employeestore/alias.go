@@ -7,9 +7,10 @@ import (
 )
 
 type (
-	Keeper        = keeper.Keeper
+	Keeper = keeper.Keeper
 	//RegisterCodec = types.RegisterCodec
-	MsgStoreName      = types.MsgEmployee
+	MsgStoreName   = types.MsgEmployee
+	MsgGetEmployee = types.MsgEmployee
 )
 
 const (
