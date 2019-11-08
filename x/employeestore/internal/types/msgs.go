@@ -1,6 +1,9 @@
 package types
 
-import sdk "github.com/cosmos/cosmos-sdk/types"
+import (
+	sdk "github.com/cosmos/cosmos-sdk/types"
+
+)
 
 const RouterKey = ModuleName
 
@@ -31,4 +34,9 @@ func (msg MsgEmployee) ValidateBasic() sdk.Error {
 		return sdk.ErrUnknownRequest("Name/Id cannot be empty")
 	}
 	return nil
+}
+
+// GetSignBytes encodes the message for signing
+func (msg MsgEmployee) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
 }
