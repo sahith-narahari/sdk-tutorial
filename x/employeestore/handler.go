@@ -5,11 +5,11 @@ import (
 	"github.com/cosmos/sdk-tutorials/nameservice/x/employeestore/internal/types"
 )
 
-func NewHandler(keeper Keeper) sdk.Handler{
-	return func(ctx sdk.Context, msg sdk.Msg) sdk.Result{
+func NewHandler(keeper Keeper) sdk.Handler {
+	return func(ctx sdk.Context, msg sdk.Msg) sdk.Result {
 		switch msg := msg.(type) {
 		case types.MsgSetInfo:
-			return handleMsgSetInfo(ctx,keeper,msg)
+			return handleMsgSetInfo(ctx, keeper, msg)
 		default:
 			return sdk.ErrUnknownRequest("Unrecognized msg type").Result()
 		}
@@ -17,6 +17,6 @@ func NewHandler(keeper Keeper) sdk.Handler{
 }
 
 func handleMsgSetInfo(ctx sdk.Context, keeper Keeper, msg types.MsgSetInfo) sdk.Result {
-keeper.SetInfo(ctx,msg.EmployeeId, msg.EmployeeName)
-return sdk.Result{}
+	keeper.SetInfo(ctx, msg.EmployeeId, msg.EmployeeInfo.EmployeeName)
+	return sdk.Result{}
 }
