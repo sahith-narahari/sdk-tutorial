@@ -38,5 +38,7 @@ func (msg MsgEmployee) ValidateBasic() sdk.Error {
 
 // GetSignBytes encodes the message for signing
 func (msg MsgEmployee) GetSignBytes() []byte {
+	ModuleCdc.MustMarshalJSON()
+
 	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
 }

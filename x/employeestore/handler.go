@@ -3,7 +3,6 @@ package employeestore
 import (
 	"fmt"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-
 )
 
 func NewHandler(keeper Keeper) sdk.Handler {
@@ -20,6 +19,8 @@ func NewHandler(keeper Keeper) sdk.Handler {
 
 func handleMsgStoreName(ctx sdk.Context, keeper Keeper, msg MsgStoreName) sdk.Result {
 
-	keeper.SetName(ctx, msg.Name, msg.EmployeeId)
+	empInfo := keeper.GetEmployee(ctx, msg.EmployeeId)
+
+	keeper.SetName(ctx, msg.Name, msg.EmployeeId, empInfo)
 	return sdk.Result{}
 }

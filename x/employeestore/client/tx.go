@@ -2,8 +2,8 @@ package client
 
 import (
 	"github.com/comdex-blockchain/client/context"
-	"github.com/cosmos-cg-key-management/cosmos-sdk/client"
-	"github.com/cosmos-cg-key-management/cosmos-sdk/x/auth"
+	"github.com/cosmos/cosmos-sdk/client"
+	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/client/utils"
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -21,7 +21,8 @@ func GetTxCmd(cdc *codec.Codec) *cobra.Command {
 
 	employeeTxCmd.AddCommand(client.PostCommands(
 		GetCmdSetName(cdc),
-	))
+	)...)
+
 	return employeeTxCmd
 }
 

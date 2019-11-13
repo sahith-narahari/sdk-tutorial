@@ -7,7 +7,6 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/cosmos-cg-key-management/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/bank"
 	"github.com/cosmos/sdk-tutorials/nameservice/x/nameservice/client/cli"
 	"github.com/cosmos/sdk-tutorials/nameservice/x/nameservice/client/rest"
@@ -15,6 +14,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/context"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/cosmos-cg-key-management/cosmos-sdk/types/module"
 )
 
 // type check to ensure the interface is properly implemented
