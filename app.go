@@ -2,6 +2,7 @@ package app
 
 import (
 	"encoding/json"
+	"github.com/cosmos/sdk-tutorials/nameservice/x/employeestore"
 	"os"
 
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -49,7 +50,7 @@ var (
 		slashing.AppModuleBasic{},
 		supply.AppModuleBasic{},
 
-		nameservice.AppModule{},
+		employeestore.AppModule{},
 	)
 	// account permissions
 	maccPerms = map[string][]string{
@@ -85,7 +86,7 @@ type nameServiceApp struct {
 	distrKeeper    distr.Keeper
 	supplyKeeper   supply.Keeper
 	paramsKeeper   params.Keeper
-	nsKeeper       nameservice.Keeper
+	empstoreKeeper       employeestore.Keeper
 
 	// Module Manager
 	mm *module.Manager
@@ -190,9 +191,8 @@ func NewNameServiceApp(
 
 	// The NameserviceKeeper is the Keeper from the module for this tutorial
 	// It handles interactions with the namestore
-	app.nsKeeper = nameservice.NewKeeper(
-		app.bankKeeper,
-		keys[nameservice.StoreKey],
+	app.empstoreKeeper = employeestore.NewKeeper(
+		keys[employeestore.StoreKey],
 		app.cdc,
 	)
 
@@ -201,7 +201,7 @@ func NewNameServiceApp(
 		genutil.NewAppModule(app.accountKeeper, app.stakingKeeper, app.BaseApp.DeliverTx),
 		auth.NewAppModule(app.accountKeeper),
 		bank.NewAppModule(app.bankKeeper, app.accountKeeper),
-		nameservice.NewAppModule(app.nsKeeper, app.bankKeeper),
+		employeestore.NewAppModule(app.empstoreKeeper, app.bankKeeper),
 		supply.NewAppModule(app.supplyKeeper, app.accountKeeper),
 		distr.NewAppModule(app.distrKeeper, app.supplyKeeper),
 		slashing.NewAppModule(app.slashingKeeper, app.stakingKeeper),
@@ -221,7 +221,7 @@ func NewNameServiceApp(
 		auth.ModuleName,
 		bank.ModuleName,
 		slashing.ModuleName,
-		nameservice.ModuleName,
+		employeestore.ModuleName,
 		supply.ModuleName,
 		genutil.ModuleName,
 	)
