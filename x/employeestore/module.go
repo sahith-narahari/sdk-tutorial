@@ -1,17 +1,19 @@
 package employeestore
 
 import (
-"encoding/json"
+	"encoding/json"
 
-"github.com/gorilla/mux"
-"github.com/spf13/cobra"
+	"github.com/gorilla/mux"
+	"github.com/spf13/cobra"
 
-"github.com/cosmos/cosmos-sdk/codec"
-"github.com/cosmos/cosmos-sdk/types/module"
-"github.com/cosmos/cosmos-sdk/x/bank"
-cli "github.com/cosmos/sdk-tutorials/nameservice/x/employeestore/client"
-sdk "github.com/cosmos/cosmos-sdk/types"
-abci "github.com/tendermint/tendermint/abci/types"
+	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/types/module"
+	"github.com/cosmos/cosmos-sdk/x/bank"
+	cli "github.com/cosmos/sdk-tutorials/nameservice/x/employeestore/client"
+
+	"github.com/cosmos/cosmos-sdk/client/context"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	abci "github.com/tendermint/tendermint/abci/types"
 )
 
 // type check to ensure the interface is properly implemented
@@ -46,6 +48,10 @@ func (AppModuleBasic) ValidateGenesis(bz json.RawMessage) error {
 	return ValidateGenesis(data)
 }
 
+// Register rest routes
+func (AppModuleBasic) RegisterRESTRoutes(ctx context.CLIContext, rtr *mux.Router) {
+	rest.RegisterRoutes(ctx, rtr, StoreKey)
+}
 
 // Get the root query command of this module
 func (AppModuleBasic) GetQueryCmd(cdc *codec.Codec) *cobra.Command {
@@ -60,6 +66,7 @@ func (AppModuleBasic) GetTxCmd(cdc *codec.Codec) *cobra.Command {
 type AppModule struct {
 	AppModuleBasic
 	keeper     Keeper
+	coinKeeper bank.Keeper
 }
 
 // NewAppModule creates a new AppModule Object
@@ -67,6 +74,7 @@ func NewAppModule(k Keeper, bankKeeper bank.Keeper) AppModule {
 	return AppModule{
 		AppModuleBasic: AppModuleBasic{},
 		keeper:         k,
+		coinKeeper:     bankKeeper,
 	}
 }
 
@@ -107,4 +115,3 @@ func (am AppModule) ExportGenesis(ctx sdk.Context) json.RawMessage {
 	gs := ExportGenesis(ctx, am.keeper)
 	return ModuleCdc.MustMarshalJSON(gs)
 }
-

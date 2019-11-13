@@ -8,7 +8,6 @@ import (
 	"log"
 	"math/rand"
 	"time"
-
 )
 
 type Keeper struct {
@@ -26,14 +25,14 @@ func NewKeeper(storekey sdk.StoreKey, cdc *codec.Codec) Keeper {
 func (k Keeper) InsertEmployeeInfo(ctx sdk.Context, employee types.EmployeeInfo) {
 	store := ctx.KVStore(k.storeKey)
 	rand.Seed(time.Now().UnixNano())
-	EmployeeId:=rand.Intn(65)
+	EmployeeId := rand.Intn(20)
 	bytesArray := make([]byte, 8)
 	binary.LittleEndian.PutUint64(bytesArray, uint64(EmployeeId))
 	if store.Has(bytesArray) {
 		log.Println("Employee Id already present")
 		return
 	}
-	store.Set(bytesArray, k.Cdc.MustMarshalBinaryBare(employee))
+	store.Set(bytesArray, k.Cdc.MustMarshalBinaryBare(employee.EmployeeName))
 }
 
 func (k Keeper) QueryEmployee(ctx sdk.Context, EmployeeId int64) types.EmployeeInfo {
@@ -56,7 +55,7 @@ func (k Keeper) SetInfo(ctx sdk.Context, Id int64, name string) {
 	k.InsertEmployeeInfo(ctx, empInfo)
 }
 
-func (k Keeper) GetInfo (ctx sdk.Context, name string) types.EmployeeInfo{
+func (k Keeper) GetInfo(ctx sdk.Context, name string) types.EmployeeInfo {
 	store := ctx.KVStore(k.storeKey)
 	bytesArray := []byte(name)
 	if !store.Has(bytesArray) {

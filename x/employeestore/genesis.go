@@ -1,10 +1,11 @@
 package employeestore
 
 import (
-"fmt"
+	"fmt"
+	"strconv"
 
-sdk "github.com/cosmos/cosmos-sdk/types"
-abci "github.com/tendermint/tendermint/abci/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+	abci "github.com/tendermint/tendermint/abci/types"
 )
 
 type GenesisState struct {
@@ -32,21 +33,24 @@ func DefaultGenesisState() GenesisState {
 
 func InitGenesis(ctx sdk.Context, keeper Keeper, data GenesisState) []abci.ValidatorUpdate {
 	for _, record := range data.EmpInfoRecords {
-		keeper.SetInfo(ctx, record.Value, record)
+		keeper.InsertEmployeeInfo(ctx, record)
 	}
 	return []abci.ValidatorUpdate{}
 }
 
 func ExportGenesis(ctx sdk.Context, k Keeper) GenesisState {
-	var records []Whois
-	iterator := k.GetNamesIterator(ctx)
+	var records []EmployeeInfo
+	iterator := k.GetIdIterator(ctx)
 	for ; iterator.Valid(); iterator.Next() {
 
-		name := string(iterator.Key())
-		whois := k.GetWhois(ctx, name)
-		records = append(records, whois)
+		KeyId := string(iterator.Key())
+		Id, err := strconv.Atoi(KeyId)
+		if err != nil {
+			fmt.Println("Unable to convert string to int")
+		}
+		emp := k.QueryEmployee(ctx, int64(Id))
+		records = append(records, emp)
 
 	}
-	return GenesisState{WhoisRecords: records}
+	return GenesisState{EmpInfoRecords: records}
 }
-

@@ -9,9 +9,8 @@ type EmployeeInfo struct {
 	EmployeeName string `json:"employee_name"`
 }
 
-func NewEmployeeInfo() EmployeeInfo{
-	return EmployeeInfo{
-	}
+func NewEmployeeInfo() EmployeeInfo {
+	return EmployeeInfo{}
 }
 
 func (e EmployeeInfo) String() string {

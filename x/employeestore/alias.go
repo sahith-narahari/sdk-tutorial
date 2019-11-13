@@ -12,14 +12,14 @@ const (
 )
 
 var (
-	NewKeeper = keeper.NewKeeper
-	NewQuerier   = keeper.NewQuerier
-	ModuleCdc        = types.ModuleCdc
-	RegisterCodec    = types.RegisterCodec
+	NewKeeper     = keeper.NewKeeper
+	NewQuerier    = keeper.NewQuerier
+	ModuleCdc     = types.ModuleCdc
+	RegisterCodec = types.RegisterCodec
 )
 
 type (
-	Keeper = keeper.Keeper
-	MsgSetInfo = types.MsgSetInfo
+	Keeper       = keeper.Keeper
+	MsgSetInfo   = types.MsgSetInfo
 	EmployeeInfo = types.EmployeeInfo
 )

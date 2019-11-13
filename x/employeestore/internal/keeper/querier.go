@@ -8,7 +8,6 @@ import (
 
 // query endpoints supported by the employee Querier
 const (
-	QueryResolve    = "resolve"
 	QueryEmployeeName = "employee_name"
 )
 
@@ -25,11 +24,11 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 }
 
 func queryEmployeeName(ctx sdk.Context, path string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
-	emp := keeper.GetInfo(ctx,path)
+	emp := keeper.GetInfo(ctx, path)
 	res, err := codec.MarshalJSONIndent(keeper.Cdc, emp)
 	if err != nil {
 		panic("could not marshal result to JSON")
 	}
-	return res,nil
+	return res, nil
 
 }

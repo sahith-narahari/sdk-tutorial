@@ -17,6 +17,6 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 
 func handleMsgSetInfo(ctx sdk.Context, keeper Keeper, msg types.MsgSetInfo) sdk.Result {
-	keeper.SetInfo(ctx, msg.EmployeeId, msg.EmployeeInfo.EmployeeName)
+	keeper.InsertEmployeeInfo(ctx, msg.EmployeeInfo)
 	return sdk.Result{}
 }
