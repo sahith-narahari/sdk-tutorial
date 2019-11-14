@@ -2,43 +2,49 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-
 )
 
 const RouterKey = ModuleName
 
-type MsgEmployee struct {
+var _ sdk.Msg = MsgStoreEmployee{}
+
+type MsgStoreEmployee struct {
 	Name       string         `json:"name"`
 	EmployeeId string         `json:"employeeId"`
-}
-
-type MsgGetEmployee struct {
+	Signers    sdk.AccAddress `json:"signers"`
 }
 
 // NewMsgSetName is a constructor function for MsgSetName
-func NewMsgStoreEmployee(name string, id string) MsgEmployee {
-	return MsgEmployee{
+func NewMsgStoreEmployee(name string, id string) MsgStoreEmployee {
+	return MsgStoreEmployee{
 		Name:       name,
 		EmployeeId: id,
 	}
 }
 
 // Route should return the name of the module
-func (msg MsgEmployee) Route() string { return RouterKey }
+func (msg MsgStoreEmployee) Route() string { return RouterKey }
 
 // Type should return the action
-func (msg MsgEmployee) Type() string { return "store_employee" }
+func (msg MsgStoreEmployee) Type() string { return "delete_name" }
 
-func (msg MsgEmployee) ValidateBasic() sdk.Error {
-	if len(msg.Name) == 0 || len(msg.EmployeeId) == 0 {
-		return sdk.ErrUnknownRequest("Name/Id cannot be empty")
+// ValidateBasic runs stateless checks on the message
+func (msg MsgStoreEmployee) ValidateBasic() sdk.Error {
+	if msg.Signers.Empty() {
+		return sdk.ErrInvalidAddress(msg.Signers.String())
+	}
+	if len(msg.Name) == 0 {
+		return sdk.ErrUnknownRequest("Name cannot be empty")
 	}
 	return nil
 }
 
 // GetSignBytes encodes the message for signing
-func (msg MsgEmployee) GetSignBytes() []byte {
-	ModuleCdc.MustMarshalJSON()
+func (msg MsgStoreEmployee) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON)
+}
 
-	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(msg))
+// GetSigners defines whose signature is required
+func (msg MsgStoreEmployee) GetSigners() []sdk.AccAddress {
+	return []sdk.AccAddress{msg.Signers}
 }

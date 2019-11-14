@@ -19,7 +19,7 @@ func TestNewMsgStoreEmployeeValidation(t *testing.T) {
 
 	cases := []struct {
 		valid bool
-		tx    MsgEmployee
+		tx    MsgStoreEmployee
 	}{
 		{true, NewMsgStoreEmployee("lp", "12")},
 		{false, NewMsgStoreEmployee("", "12")},

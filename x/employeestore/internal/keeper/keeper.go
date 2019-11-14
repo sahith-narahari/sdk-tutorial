@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/comdex-blockchain/x/bank"
 	"github.com/cosmos/cosmos-sdk/codec"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/sahith-narahari/sdk-tutorial/x/employeestore/internal/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 type Keeper struct {
@@ -16,7 +16,7 @@ type Keeper struct {
 	cdc *codec.Codec
 }
 
-func (k Keeper) SetName(ctx sdk.Context, Name string, id string, empInfo types.MsgEmployee) {
+func (k Keeper) SetName(ctx sdk.Context, Name string, id string, empInfo types.MsgStoreEmployee) {
 	if empInfo.Name != "" || empInfo.EmployeeId != "" {
 		return
 	}
@@ -24,16 +24,17 @@ func (k Keeper) SetName(ctx sdk.Context, Name string, id string, empInfo types.M
 	store.Set([]byte(Name), []byte(id))
 }
 
-func (k Keeper) GetEmployee(ctx sdk.Context, employeeId string) types.MsgEmployee {
+func (k Keeper) GetEmployee(ctx sdk.Context, employeeId string) types.MsgStoreEmployee {
 	store := ctx.KVStore(k.StoreKey)
 	empBytesData := []byte(employeeId)
 	if !store.Has(empBytesData) {
 		fmt.Println("Employee does not exist")
-		return types.MsgEmployee{Name: ""}
+		return types.MsgStoreEmployee{Name: ""}
 	}
 
 	info := store.Get(empBytesData)
-	var emp types.MsgEmployee
-	k.cdc.MustUnmarshalBinaryBare(info, &emp)
+	var emp types.MsgStoreEmployee
+
+	k.cdc.MustMarshalBinaryBare(info, &emp)
 	return emp
 }

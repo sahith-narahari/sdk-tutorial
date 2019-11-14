@@ -9,5 +9,5 @@ func init() {
 }
 
 func RegisterCodec(cdc *codec.Codec) {
-	cdc.RegisterConcrete(MsgEmployee{}, "employeestore/SetEmployee", nil)
+	cdc.RegisterConcrete(MsgStoreEmployee{}, "employeestore/SetEmployee", nil)
 }
