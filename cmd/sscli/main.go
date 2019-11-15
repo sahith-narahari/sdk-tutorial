@@ -13,7 +13,7 @@ import (
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	authrest "github.com/cosmos/cosmos-sdk/x/auth/client/rest"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
-	app "github.com/cosmos/sdk-tutorials/nameservice"
+	app "github.com/sahith-narahari/sdk-tutorials"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	amino "github.com/tendermint/go-amino"
@@ -33,8 +33,8 @@ func main() {
 	config.Seal()
 
 	rootCmd := &cobra.Command{
-		Use:   "escli",
-		Short: "employee store Client",
+		Use:   "sscli",
+		Short: "student store Client",
 	}
 
 	// Add --chain-id to persistent flags and mark it required

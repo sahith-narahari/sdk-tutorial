@@ -15,7 +15,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	genutilcli "github.com/cosmos/cosmos-sdk/x/genutil/client/cli"
-	app "github.com/cosmos/sdk-tutorials/nameservice"
+	app "github.com/sahith-narahari/sdk-tutorials"
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmtypes "github.com/tendermint/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
