@@ -19,8 +19,8 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 
 func handleMsgStoreStudent(ctx sdk.Context, keeper Keeper, msg MsgStoreStudent) sdk.Result {
-	if !msg.Owner.Equals(keeper.GetOwner(ctx, msg.Id)) {
-		return sdk.ErrUnauthorized("Incorrect owner").Result()
+	if keeper.GetStudent(ctx, msg.Id).Id != "" {
+		return sdk.ErrUnknownRequest("Id already exists").Result()
 	}
 
 	keeper.SetStudent(ctx, msg.Name, msg.Id, msg.Owner)

@@ -34,6 +34,20 @@ func (k Keeper) SetStudent(ctx sdk.Context, Name string, id string, owner sdk.Ac
 	store.Set([]byte(id), k.cdc.MustMarshalBinaryBare(student))
 }
 
+func (k Keeper) GetStudent (ctx sdk.Context, id string) types.MsgStudentStore  {
+	var studentStore types.MsgStudentStore
+	store := ctx.KVStore(k.Storekey)
+
+	bz := store.Get([]byte(id))
+
+	if bz == nil {
+		return studentStore
+	}
+
+	k.cdc.MustUnmarshalBinaryBare(bz, &studentStore)
+	return studentStore
+}
+
 func (k Keeper) GetOwner(ctx sdk.Context, id string) sdk.AccAddress {
 	var studentStore types.MsgStudentStore
 
