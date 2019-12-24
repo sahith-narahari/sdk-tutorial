@@ -7,7 +7,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/auth"
 	"github.com/cosmos/cosmos-sdk/x/auth/client/utils"
-	"github.com/sahith-narahari/sdk-tutorials/x/studentstore/internal/types"
+	"github.com/sahith-narahari/sdk-tutorial/x/studentstore/internal/types"
 	"github.com/spf13/cobra"
 )
 

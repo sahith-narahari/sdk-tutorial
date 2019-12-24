@@ -6,7 +6,6 @@ import (
 
 const RouterKey = ModuleName
 
-
 type MsgStudentStore struct {
 	Id 	string 		`json:"id"`
 	Name string 	`json:"name"`

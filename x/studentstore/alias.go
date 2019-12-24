@@ -1,8 +1,8 @@
 package studentstore
 
 import (
-	"github.com/sahith-narahari/sdk-tutorials/x/studentstore/internal/keeper"
-	"github.com/sahith-narahari/sdk-tutorials/x/studentstore/internal/types"
+	"github.com/sahith-narahari/sdk-tutorial/x/studentstore/internal/keeper"
+	"github.com/sahith-narahari/sdk-tutorial/x/studentstore/internal/types"
 )
 
 const (
@@ -12,10 +12,9 @@ const (
 )
 
 var (
-	NewKeeper = keeper.NewKeeper
+	NewKeeper    = keeper.NewKeeper
 	ModuleCdc    = types.ModuleCdc
 	RegiserCodec = types.RegisterCodec
-
 )
 
 type (
