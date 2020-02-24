@@ -1,9 +1,10 @@
 package keeper
 
 import (
-	"github.com/cosmos/cosmos-sdk/x/bank"
-	"nameservice/x/orgstore/internal/types"
+	"sdk-tutorial/x/orgstore/internal/types"
 	"testing"
+
+	"github.com/cosmos/cosmos-sdk/x/bank"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/store"
@@ -21,8 +22,8 @@ type testInput struct {
 	ctx sdk.Context
 	ak  auth.AccountKeeper
 	pk  params.Keeper
-	ns Keeper
-	bk bank.Keeper
+	ns  Keeper
+	bk  bank.Keeper
 }
 
 func setupTestInput() testInput {
@@ -43,34 +44,30 @@ func setupTestInput() testInput {
 	ms.MountStoreWithDB(tkeyParams, sdk.StoreTypeTransient, db)
 	ms.LoadLatestVersion()
 
-
-
-	pk := params.NewKeeper(cdc, keyParams, tkeyParams,params.DefaultCodespace)
+	pk := params.NewKeeper(cdc, keyParams, tkeyParams, params.DefaultCodespace)
 	ak := auth.NewAccountKeeper(
-		cdc, authCapKey, pk.Subspace(auth.DefaultParamspace),auth.ProtoBaseAccount,
+		cdc, authCapKey, pk.Subspace(auth.DefaultParamspace), auth.ProtoBaseAccount,
 	)
 
 	m := make(map[string]bool)
 
-	bankKeeper := bank.NewBaseKeeper(ak,pk.Subspace(auth.DefaultParamspace), params.DefaultCodespace,m)
+	bankKeeper := bank.NewBaseKeeper(ak, pk.Subspace(auth.DefaultParamspace), params.DefaultCodespace, m)
 
 	ctx := sdk.NewContext(ms, abci.Header{ChainID: "test-chain-id"}, false, log.NewNopLogger())
 	bankKeeper.SetSendEnabled(ctx, true)
 
 	ak.SetParams(ctx, auth.DefaultParams())
 
-	return testInput{cdc: cdc, ctx: ctx, ak: ak, pk: pk , bk:bankKeeper}
+	return testInput{cdc: cdc, ctx: ctx, ak: ak, pk: pk, bk: bankKeeper}
 }
 
 func TestAddOrgKeeper(t *testing.T) {
-
 
 	input := setupTestInput()
 
 	t.Log("")
 	ctx := input.ctx
 	addr := sdk.AccAddress([]byte("addr1"))
-
 
 	acc := input.ak.NewAccountWithAddress(ctx, addr)
 
@@ -82,4 +79,3 @@ func TestAddOrgKeeper(t *testing.T) {
 	require.True(t, input.bk.GetCoins(ctx, addr).IsEqual(sdk.NewCoins(sdk.NewInt64Coin("stake", 100000000))))
 
 }
-

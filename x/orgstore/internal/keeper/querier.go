@@ -1,16 +1,17 @@
 package keeper
 
 import (
+	"sdk-tutorial/x/orgstore/internal/types"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
-	"nameservice/x/orgstore/internal/types"
 )
 
 // query endpoints supported by the orgstore Querier
 const (
-	QueryOrg   = "org"
-	QueryOrgs   = "orgs"
+	QueryOrg  = "org"
+	QueryOrgs = "orgs"
 )
 
 // NewQuerier is the module level router for state queries
@@ -18,16 +19,14 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 	return func(ctx sdk.Context, path []string, req abci.RequestQuery) (res []byte, err sdk.Error) {
 		switch path[0] {
 		case QueryOrg:
-			return queryOrg(ctx,path,req,keeper)
+			return queryOrg(ctx, path, req, keeper)
 		case QueryOrgs:
-			return queryOrgs(ctx,path,req,keeper)
+			return queryOrgs(ctx, path, req, keeper)
 		default:
 			return nil, sdk.ErrUnknownRequest("unknown orgstore query endpoint")
 		}
 	}
 }
-
-
 
 // nolint: unparam
 func queryOrg(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
@@ -44,13 +43,13 @@ func queryOrg(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keep
 func queryOrgs(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Keeper) ([]byte, sdk.Error) {
 	var orgsList types.QueryOrgsResolve
 
-	iterator :=keeper.GetOrgIterator(ctx)
+	iterator := keeper.GetOrgIterator(ctx)
 
 	for ; iterator.Valid(); iterator.Next() {
 		store := ctx.KVStore(keeper.storeKey)
 		bz := store.Get(iterator.Key())
 		var org types.QueryOrgResolve
-		keeper.cdc.MustUnmarshalBinaryBare(bz,&org)
+		keeper.cdc.MustUnmarshalBinaryBare(bz, &org)
 		orgsList = append(orgsList, org)
 	}
 

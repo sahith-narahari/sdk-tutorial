@@ -2,15 +2,17 @@ package orgstore
 
 import (
 	"encoding/json"
+
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/gorilla/mux"
 
 	"github.com/spf13/cobra"
 
+	"sdk-tutorial/x/orgstore/client/cli"
+
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/bank"
-	"nameservice/x/orgstore/client/cli"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -53,7 +55,6 @@ func (AppModuleBasic) ValidateGenesis(bz json.RawMessage) error {
 }
 
 // Register rest routes
-
 
 // Get the root query command of this module
 func (AppModuleBasic) GetQueryCmd(cdc *codec.Codec) *cobra.Command {

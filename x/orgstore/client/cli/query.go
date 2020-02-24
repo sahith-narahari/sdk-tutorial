@@ -9,8 +9,9 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/codec"
 
+	"sdk-tutorial/x/orgstore/internal/types"
+
 	"github.com/cosmos/cosmos-sdk/client/context"
-	"nameservice/x/orgstore/internal/types"
 )
 
 func GetQueryCmd(storeKey string, cdc *codec.Codec) *cobra.Command {
@@ -22,15 +23,14 @@ func GetQueryCmd(storeKey string, cdc *codec.Codec) *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 	nameserviceQueryCmd.AddCommand(client.GetCommands(
-		GetCmdOrgIs(storeKey,cdc),
-		GetCmdOrgs(storeKey,cdc),
-		GetCmdUsers(storeKey,cdc),
+		GetCmdOrgIs(storeKey, cdc),
+		GetCmdOrgs(storeKey, cdc),
+		GetCmdUsers(storeKey, cdc),
 	)...)
 	return nameserviceQueryCmd
 }
 
-
-func GetCmdOrgIs(queryRoute string,cdc *codec.Codec) *cobra.Command {
+func GetCmdOrgIs(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "org [organization-name]",
 		Short: "Query organization",
@@ -39,7 +39,7 @@ func GetCmdOrgIs(queryRoute string,cdc *codec.Codec) *cobra.Command {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			name := args[0]
 
-			res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/org/%s", queryRoute,name), nil)
+			res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/org/%s", queryRoute, name), nil)
 			if err != nil {
 				fmt.Printf("could not resolve whois - %s \n", name)
 				return nil
@@ -53,7 +53,7 @@ func GetCmdOrgIs(queryRoute string,cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-func GetCmdOrgs(queryRoute string,cdc *codec.Codec) *cobra.Command {
+func GetCmdOrgs(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "orgs",
 		Short: "Query all organizations",
@@ -61,7 +61,7 @@ func GetCmdOrgs(queryRoute string,cdc *codec.Codec) *cobra.Command {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/orgs", queryRoute), nil)
 			if err != nil {
-				fmt.Printf("could not resolve orgs- err %v\n",err)
+				fmt.Printf("could not resolve orgs- err %v\n", err)
 				return nil
 			}
 
@@ -73,7 +73,7 @@ func GetCmdOrgs(queryRoute string,cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-func GetCmdUsers(queryRoute string,cdc *codec.Codec) *cobra.Command {
+func GetCmdUsers(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "emps",
 		Short: "Query all employees in organizations",
@@ -82,9 +82,9 @@ func GetCmdUsers(queryRoute string,cdc *codec.Codec) *cobra.Command {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 			name := args[0]
 
-			res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/org/%s", queryRoute,name), nil)
+			res, _, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/org/%s", queryRoute, name), nil)
 			if err != nil {
-				fmt.Printf("could not resolve orgs- err %v\n",err)
+				fmt.Printf("could not resolve orgs- err %v\n", err)
 				return nil
 			}
 
@@ -95,5 +95,3 @@ func GetCmdUsers(queryRoute string,cdc *codec.Codec) *cobra.Command {
 		},
 	}
 }
-
-
