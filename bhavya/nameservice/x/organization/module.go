@@ -2,15 +2,16 @@ package orgs
 
 import (
 	"encoding/json"
+
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/gorilla/mux"
 
 	"github.com/spf13/cobra"
 
+	"github.com/cosmos/bhavya/nameservice/x/organization/client/cli"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/bank"
-	"github.com/cosmos/bhavya/nameservice/x/organization/client/cli"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	abci "github.com/tendermint/tendermint/abci/types"
@@ -35,10 +36,8 @@ func (AppModuleBasic) RegisterCodec(cdc *codec.Codec) {
 
 // Register rest routes
 func (AppModuleBasic) RegisterRESTRoutes(ctx context.CLIContext, rtr *mux.Router) {
-	//rest.RegisterRoutes(ctx, rtr, StoreKey)
 	panic("implement me")
 }
-
 
 func (AppModuleBasic) DefaultGenesis() json.RawMessage {
 	return ModuleCdc.MustMarshalJSON(DefaultGenesisState())

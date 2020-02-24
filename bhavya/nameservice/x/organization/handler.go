@@ -28,9 +28,7 @@ func NewHandler(keeper orgs.Keeper) sdk.Handler {
 
 // Handle a message to set name
 func handleMsgSetOrg(ctx sdk.Context, keeper orgs.Keeper, msg types.MsgSetOrg) sdk.Result {
-	//if !msg.Owner.Equals(keeper.GetOwner(ctx, msg.Name)) { // Checks if the the msg sender is the same as the current owner
-	//	return sdk.ErrUnauthorized("Incorrect Owner").Result() // If not, throw an error
-	//}
+
 	org := Orgs{
 		Name:  msg.Name,
 		CEO:   msg.CEO,
@@ -43,16 +41,8 @@ func handleMsgSetOrg(ctx sdk.Context, keeper orgs.Keeper, msg types.MsgSetOrg) s
 
 // Handle a message to set name
 func handleMsgUpdateOrg(ctx sdk.Context, keeper orgs.Keeper, msg types.MsgUpdateOrg) sdk.Result {
-	//if !msg.Owner.Equals(keeper.GetOwner(ctx, msg.Name)) { // Checks if the the msg sender is the same as the current owner
-	//	return sdk.ErrUnauthorized("Incorrect Owner").Result() // If not, throw an error
-	//}
-	//org := Orgs{
-	//	Name:  msg.Name,
-	//	Owner: msg.Owner,
-	//	Employee:msg.Employee,
-	//}
 
-	keeper.UpdateOrg(ctx, msg.Name, msg.ID, msg.Employee) // If so, set the name to the value specified in the msg.
+	keeper.UpdateOrg(ctx, msg.Name, msg.ID, msg.Employee) // Set the name to the value specified in the msg.
 	return sdk.Result{}                                   // return
 }
 

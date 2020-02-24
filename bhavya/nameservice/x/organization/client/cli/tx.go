@@ -14,7 +14,7 @@ import (
 
 func GetTxCmd(storeKey string, cdc *codec.Codec) *cobra.Command {
 	orgsTxCmd := &cobra.Command{
-		Use:                       types.ModuleName ,
+		Use:                        types.ModuleName,
 		Short:                      "Orgs transaction subcommands",
 		DisableFlagParsing:         true,
 		SuggestionsMinimumDistance: 2,
@@ -41,17 +41,12 @@ func GetCmdSetOrg(cdc *codec.Codec) *cobra.Command {
 
 			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
 
-			// if err := cliCtx.EnsureAccountExists(); err != nil {
-			// 	return err
-			// }
-
 			msg := types.NewMsgSetOrg(args[0], args[1], cliCtx.GetFromAddress())
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
 			}
 
-			// return utils.CompleteAndBroadcastTxCLI(txBldr, cliCtx, msgs)
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
 		},
 	}
@@ -68,17 +63,12 @@ func GetCmdUpdateOrg(cdc *codec.Codec) *cobra.Command {
 
 			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
 
-			// if err := cliCtx.EnsureAccountExists(); err != nil {
-			// 	return err
-			// }
-
-			msg := types.NewMsgUpdateOrg(args[0], args[1], args[2],cliCtx.GetFromAddress())
+			msg := types.NewMsgUpdateOrg(args[0], args[1], args[2], cliCtx.GetFromAddress())
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
 			}
 
-			// return utils.CompleteAndBroadcastTxCLI(txBldr, cliCtx, msgs)
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
 		},
 	}
@@ -95,17 +85,12 @@ func GetCmdDeleteOrg(cdc *codec.Codec) *cobra.Command {
 
 			txBldr := auth.NewTxBuilderFromCLI().WithTxEncoder(utils.GetTxEncoder(cdc))
 
-			// if err := cliCtx.EnsureAccountExists(); err != nil {
-			// 	return err
-			// }
-
-			msg := types.NewMsgDeleteOrg(args[0],cliCtx.GetFromAddress())
+			msg := types.NewMsgDeleteOrg(args[0], cliCtx.GetFromAddress())
 			err := msg.ValidateBasic()
 			if err != nil {
 				return err
 			}
 
-			// return utils.CompleteAndBroadcastTxCLI(txBldr, cliCtx, msgs)
 			return utils.GenerateOrBroadcastMsgs(cliCtx, txBldr, []sdk.Msg{msg})
 		},
 	}

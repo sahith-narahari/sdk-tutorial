@@ -18,9 +18,7 @@ type Keeper struct {
 
 // Sets the entire Org metadata struct for a name
 func (k Keeper) SetOrg(ctx sdk.Context, name string, org types.Org) {
-	//if org.Owner.Empty() {
-	//	return
-	//}
+
 	store := ctx.KVStore(k.storeKey)
 	store.Set([]byte(name), k.cdc.MustMarshalBinaryBare(org))
 }
@@ -28,11 +26,10 @@ func (k Keeper) SetOrg(ctx sdk.Context, name string, org types.Org) {
 // updates the org employee
 func (k Keeper) UpdateOrg(ctx sdk.Context, name string, id string, emp string) {
 	org := k.GetOrg(ctx, name)
-	org.Employee =append(org.Employee, emp)
+	org.Employee = append(org.Employee, emp)
 	org.ID = id
 	store := ctx.KVStore(k.storeKey)
 	store.Set([]byte(name), k.cdc.MustMarshalBinaryBare(org))
-	//k.SetOrg(ctx, name, org)
 }
 
 // Deletes the entire Org metadata struct for a name
